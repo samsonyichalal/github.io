@@ -49,4 +49,4 @@ function animateProgress() {
 
 requestAnimationFrame(animateProgress);
 
-}
+
