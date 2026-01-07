@@ -63,7 +63,7 @@
     background: #eaeef2;
     border-radius: 5px;
     overflow: hidden;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     max-width: 800px;
   }
 
@@ -120,11 +120,36 @@
     color: #656d76;
   }
 
+  /* Сетка квадратиков */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 8px;
+    margin: 40px 0;
+    max-width: 800px;
+  }
+
+  .grid-cell {
+    width: 20px;
+    height: 20px;
+    background: #eaeef2;
+    border: 1px solid #d0d7de;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+
+  .grid-cell.active {
+    background: #2da44e;
+    border-color: #2da44e;
+    box-shadow: 0 0 8px rgba(45, 164, 78, 0.3);
+    transform: scale(1.1);
+  }
+
   .redirect-message {
     color: #57606a;
     font-size: 20px;
     text-align: left;
-    margin-top: 40px;
+    margin-top: 20px;
     max-width: 800px;
     line-height: 1.4;
   }
@@ -176,6 +201,9 @@
     <div class="progress-fill" id="progress-fill"></div>
   </div>
   
+  <!-- Сетка квадратиков -->
+  <div class="grid-container" id="grid"></div>
+  
   <div class="status-container">
     <div class="status-title">
       <span class="status-dot"></span>
@@ -194,6 +222,27 @@
 <script>
   const percentageElement = document.getElementById('percentage');
   const progressFill = document.getElementById('progress-fill');
+  const grid = document.getElementById('grid');
+  
+  // Создаем сетку 10x7 квадратиков (70 квадратов)
+  for (let i = 0; i < 70; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'grid-cell';
+    grid.appendChild(cell);
+  }
+  
+  // Анимация квадратиков (случайная активация)
+  setInterval(() => {
+    const cells = document.querySelectorAll('.grid-cell');
+    cells.forEach(cell => {
+      if (Math.random() > 0.9) { // 10% шанс активации
+        cell.classList.add('active');
+        setTimeout(() => {
+          cell.classList.remove('active');
+        }, 400);
+      }
+    });
+  }, 200);
   
   let progress = 0;
   const duration = 3000; // 3 секунды анимация
