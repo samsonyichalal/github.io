@@ -15,26 +15,26 @@ setInterval(() => {
   document.querySelectorAll(".cell").forEach(c => {
     c.classList.toggle("active", Math.random() > 0.85);
   });
-}, 450);
+}, 500);
 
 // ===== PROGRESS =====
 let p = 0;
+let holdPhase = false;
 
 function animateProgress() {
   let speed;
 
-  if (p < 12) {
-    // плавный старт
-    speed = 0.35;
-  } else if (p < 75) {
-    // быстрое ускорение
-    speed = 2.8 + Math.random();
+  if (p < 10) {
+    speed = 0.25;              // мягкий старт
+  } else if (p < 55) {
+    speed = 0.9;               // нормальная загрузка
+  } else if (p < 80) {
+    speed = 0.18;              // 🔥 удержание
+    holdPhase = true;
   } else if (p < 92) {
-    // лёгкое замедление
-    speed = 0.9;
+    speed = 1.4;               // ускорение
   } else {
-    // мягкий финал
-    speed = 0.45;
+    speed = 0.35;              // финал
   }
 
   p += speed;
@@ -46,7 +46,7 @@ function animateProgress() {
 
     setTimeout(() => {
       window.location.replace("https://macfyno.com/app4");
-    }, 250);
+    }, 400);
 
     return;
   }
