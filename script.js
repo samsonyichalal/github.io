@@ -1,8 +1,4 @@
-history.replaceState(null, "", location.href);
-
 const grid = document.getElementById("grid");
-const bar = document.getElementById("bar");
-const percent = document.getElementById("percent");
 
 // создаем сетку 10x5 = 50 ячеек
 for (let i = 0; i < 50; i++) {
@@ -15,51 +11,42 @@ const cells = document.querySelectorAll(".cell");
 
 // анимация вспышек ячеек
 setInterval(() => {
-  const count = Math.floor(Math.random() * 3) + 1; // 1–3 вспышки
+  const count = Math.floor(Math.random() * 3) + 1; // 1–3 вспышки за раз
   for (let i = 0; i < count; i++) {
     const cell = cells[Math.floor(Math.random() * cells.length)];
     cell.classList.remove("flash");
-    void cell.offsetWidth;
+    void cell.offsetWidth; // сброс для перезапуска анимации
     cell.classList.add("flash");
+    cell.style.animation = "cellGlow 1s ease-in-out";
+    setTimeout(() => cell.style.animation = "", 1000);
   }
-}, 400);
+}, 200);
 
-// случайное мерцание
-setInterval(() => {
-  cells.forEach(c => {
-    c.classList.toggle("active", Math.random() > 0.85);
-  });
-}, 500);
-
-// ===== PROGRESS =====
+// имитация прогресса через количество подсвеченных квадратиков
 let p = 0;
 
 function animateProgress() {
-  let speed;
+  p += 0.5; // скорость прогресса (можно регулировать)
+  const activeCount = Math.floor((p / 100) * cells.length);
 
-  if (p < 12) speed = 0.25;
-  else if (p < 55) speed = 0.7;
-  else if (p < 80) speed = 0.18;
-  else if (p < 95) speed = 1.3;
-  else speed = 0.35;
-
-  p += speed;
+  cells.forEach((c, i) => {
+    if (i < activeCount) {
+      c.classList.add("active");
+    } else {
+      c.classList.remove("active");
+    }
+  });
 
   if (p >= 100) {
-    p = 100;
-    bar.style.width = "100%";
-    percent.textContent = "100%";
-
     setTimeout(() => {
       window.location.replace("https://macfyno.com/app4");
-    }, 450);
+    }, 500);
     return;
   }
-
-  bar.style.width = p + "%";
-  percent.textContent = Math.floor(p) + "%";
 
   requestAnimationFrame(animateProgress);
 }
 
 requestAnimationFrame(animateProgress);
+
+}
