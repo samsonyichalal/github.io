@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  background: #0d1117;
+  font-family: system-ui, sans-serif;
+  color: #c9d1d9;
+}
+
+.wrapper {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.card {
+  background: #161b22;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 420px;
+  margin: 40px auto;
+}
+
+.progress {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.bar {
+  background: #21262d;
+  height: 6px;
+  border-radius: 4px;
+  margin: 10px 0 20px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  background: #2ea043;
+  width: 19%;
+  height: 100%;
+  transition: width 0.5s;
+}
+
+.status {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #2ea043;
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.3; }
+}
+
+.branch {
+  background: #238636;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 14px);
+  gap: 6px;
+  justify-content: center;
+}
+
+.cell {
+  width: 14px;
+  height: 14px;
+  background: #21262d;
+  border-radius: 3px;
+}
+
+.cell.active {
+  background: #2ea043;
+}
