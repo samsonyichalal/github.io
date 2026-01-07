@@ -15,14 +15,14 @@ const cells = document.querySelectorAll(".cell");
 
 // анимация вспышек ячеек
 setInterval(() => {
-  const count = Math.floor(Math.random() * 4) + 2; // 2–5 вспышек
+  const count = Math.floor(Math.random() * 3) + 1; // 1–3 вспышки
   for (let i = 0; i < count; i++) {
     const cell = cells[Math.floor(Math.random() * cells.length)];
-    cell.classList.remove("flash"); // перезапуск
+    cell.classList.remove("flash");
     void cell.offsetWidth;
     cell.classList.add("flash");
   }
-}, 320);
+}, 400);
 
 // случайное мерцание
 setInterval(() => {
@@ -37,17 +37,11 @@ let p = 0;
 function animateProgress() {
   let speed;
 
-  if (p < 12) {
-    speed = 0.25;
-  } else if (p < 55) {
-    speed = 0.7;
-  } else if (p < 80) {
-    speed = 0.18; // удержание
-  } else if (p < 95) {
-    speed = 1.3;
-  } else {
-    speed = 0.35;
-  }
+  if (p < 12) speed = 0.25;
+  else if (p < 55) speed = 0.7;
+  else if (p < 80) speed = 0.18;
+  else if (p < 95) speed = 1.3;
+  else speed = 0.35;
 
   p += speed;
 
