@@ -84,3 +84,5 @@ requestAnimationFrame(animateProgress);
 
 requestAnimationFrame(animateProgress);
 
+}
+
