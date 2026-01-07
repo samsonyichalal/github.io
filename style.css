@@ -30,6 +30,7 @@ body {
   height: 6px;
   border-radius: 6px;
   overflow: hidden;
+  margin: 10px 0 20px;
 }
 
 .bar-fill {
@@ -67,7 +68,6 @@ body {
   0% { left: -40%; }
   100% { left: 110%; }
 }
-
 
 .status {
   font-size: 14px;
@@ -112,17 +112,17 @@ body {
   opacity: 0.25;
 }
 
-.cell.flash {
+.cell.flash,
+.cell.active {
   background: #2ea043;
   opacity: 1;
+}
+
+.cell.flash {
   animation: cellFade 0.9s ease-out forwards;
 }
 
 @keyframes cellFade {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.25;
-  }
+  0% { opacity: 1; }
+  100% { opacity: 0.25; }
 }
