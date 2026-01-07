@@ -24,14 +24,16 @@
 
   .wrapper {
     width: 100%;
-    max-width: 500px;
+    max-width: 480px;
     text-align: center;
   }
 
   .github-logo {
     font-size: 32px;
     font-weight: 700;
-    color: #f0f6fc;
+    background: linear-gradient(90deg, #f0f6fc, #8b949e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 12px;
   }
 
@@ -67,24 +69,32 @@
   }
 
   .progress-bar {
-    height: 6px;
+    height: 8px;
     background: #21262d;
-    border-radius: 3px;
+    border-radius: 8px;
     overflow: hidden;
     margin-bottom: 28px;
+    position: relative;
   }
 
   .progress-fill {
     height: 100%;
-    width: 10%;
-    background: linear-gradient(90deg, #2da44e, #2da44e);
-    border-radius: 3px;
-    animation: progressAnimation 2s ease-in-out forwards;
+    width: 0%;
+    background: linear-gradient(90deg, #238636, #2ea043);
+    border-radius: 8px;
+    position: relative;
+    transition: width 0.3s ease-out;
   }
 
-  @keyframes progressAnimation {
-    0% { width: 10%; }
-    100% { width: 100%; }
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 0 8px 8px 0;
   }
 
   .status {
@@ -97,8 +107,8 @@
   }
 
   .status-dot {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     background: #2ea043;
     border-radius: 50%;
     animation: pulse 1.5s infinite ease-in-out;
@@ -128,27 +138,24 @@
     opacity: 0.8;
   }
 
-  /* Уменьшенные квадратики */
   .grid-container {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    gap: 6px;
+    gap: 8px;
     margin-bottom: 8px;
   }
 
   .grid-cell {
-    width: 12px;
-    height: 12px;
+    aspect-ratio: 1;
     background: #21262d;
-    border-radius: 2px;
+    border-radius: 4px;
     transition: all 0.3s ease;
-    margin: 0 auto;
   }
 
   .grid-cell.active {
     background: linear-gradient(135deg, #238636, #2ea043);
-    box-shadow: 0 0 6px rgba(46, 160, 67, 0.4);
-    transform: scale(1.2);
+    box-shadow: 0 0 8px rgba(46, 160, 67, 0.4);
+    transform: scale(1.1);
   }
 
   .footer {
@@ -169,7 +176,7 @@
   <div class="card">
     <div class="progress-header">
       <span>Processing request</span>
-      <span class="progress-percent" id="percent">10%</span>
+      <span class="progress-percent" id="percent">0%</span>
     </div>
 
     <div class="progress-bar">
@@ -194,56 +201,90 @@
 </div>
 
 <script>
-  // Инициализация сетки (70 квадратиков)
+  // Инициализация сетки
   const grid = document.getElementById('grid');
+  const bar = document.getElementById('bar');
+  const percent = document.getElementById('percent');
   
+  // Создаем 70 ячеек (10x7)
   for (let i = 0; i < 70; i++) {
     const cell = document.createElement('div');
     cell.className = 'grid-cell';
     grid.appendChild(cell);
   }
   
-  // Анимация квадратиков (случайное включение)
+  // Анимация сетки
   setInterval(() => {
     const cells = document.querySelectorAll('.grid-cell');
     cells.forEach(cell => {
-      if (Math.random() > 0.9) { // 10% шанс активации
+      if (Math.random() > 0.88) {
         cell.classList.add('active');
         setTimeout(() => {
           cell.classList.remove('active');
         }, 300);
       }
     });
-  }, 200);
+  }, 400);
   
-  // Обновление процента прогресса в соответствии с анимацией полосы
-  const percentElement = document.getElementById('percent');
-  let currentPercent = 10;
+  // Прогресс бар с реалистичными фазами
+  let progress = 0;
+  let isHoldPhase = false;
+  let holdStartTime = null;
   
-  // Функция для обновления процента
-  function updateProgress() {
-    const bar = document.getElementById('bar');
-    const computedStyle = getComputedStyle(bar);
-    const width = computedStyle.width;
-    const widthPercent = parseFloat(width) / parseFloat(getComputedStyle(bar.parentElement).width) * 100;
+  function animateProgress() {
+    let speed = 0;
+    const now = Date.now();
     
-    currentPercent = Math.min(100, Math.floor(widthPercent));
-    percentElement.textContent = currentPercent + '%';
-    
-    if (currentPercent < 100) {
-      requestAnimationFrame(updateProgress);
+    // Разные фазы загрузки
+    if (progress < 10) {
+      // Начало
+      speed = 0.2;
+    } else if (progress < 40) {
+      // Быстрая фаза
+      speed = 0.8;
+    } else if (progress < 60) {
+      // Фаза удержания (имитация процесса)
+      if (!isHoldPhase) {
+        isHoldPhase = true;
+        holdStartTime = now;
+      }
+      // Медленно растем во время удержания
+      const holdDuration = (now - holdStartTime) / 1000;
+      speed = 0.05 + Math.sin(holdDuration * 2) * 0.02;
+    } else if (progress < 90) {
+      // Ускорение после удержания
+      speed = 1.2;
+      isHoldPhase = false;
     } else {
-      // Редирект после завершения
+      // Завершение
+      speed = 0.3;
+    }
+    
+    progress += speed;
+    
+    if (progress >= 100) {
+      progress = 100;
+      bar.style.width = '100%';
+      percent.textContent = '100%';
+      
+      // Редирект через 500мс
       setTimeout(() => {
+        // Замените на ваш URL
         window.location.href = 'https://example.com/installation';
       }, 500);
+      return;
     }
+    
+    bar.style.width = progress + '%';
+    percent.textContent = Math.floor(progress) + '%';
+    
+    requestAnimationFrame(animateProgress);
   }
   
-  // Запуск обновления процента
+  // Запуск анимации
   setTimeout(() => {
-    updateProgress();
-  }, 100);
+    requestAnimationFrame(animateProgress);
+  }, 300);
 </script>
 
 </body>
