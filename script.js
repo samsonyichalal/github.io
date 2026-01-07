@@ -1,8 +1,5 @@
 history.replaceState(null, "", location.href);
 
-
-history.replaceState(null, "", location.href);
-
 const grid = document.getElementById("grid");
 const bar = document.getElementById("bar");
 const percent = document.getElementById("percent");
@@ -28,16 +25,16 @@ function animateProgress() {
   let speed;
 
   if (p < 10) {
-    speed = 0.25;              // мягкий старт
+    speed = 0.3;              // мягкий старт
   } else if (p < 55) {
-    speed = 0.9;               // нормальная загрузка
+    speed = 0.8;               // нормальная загрузка
   } else if (p < 80) {
-    speed = 0.18;              // 🔥 удержание
+    speed = 0.15;              // 🔥 удержание
     holdPhase = true;
   } else if (p < 92) {
-    speed = 1.4;               // ускорение
+    speed = 1.5;               // ускорение
   } else {
-    speed = 0.35;              // финал
+    speed = 0.4;               // финал
   }
 
   p += speed;
@@ -61,4 +58,3 @@ function animateProgress() {
 }
 
 requestAnimationFrame(animateProgress);
-
