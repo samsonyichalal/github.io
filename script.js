@@ -4,12 +4,18 @@ const grid = document.getElementById("grid");
 const bar = document.getElementById("bar");
 const percent = document.getElementById("percent");
 
-// ===== GRID =====
-for (let i = 0; i < 70; i++) {
-  const cell = document.createElement("div");
-  cell.className = "cell";
-  grid.appendChild(cell);
-}
+const cells = document.querySelectorAll(".cell");
+
+setInterval(() => {
+  const count = Math.floor(Math.random() * 4) + 2; // 2–5 вспышек
+  for (let i = 0; i < count; i++) {
+    const cell = cells[Math.floor(Math.random() * cells.length)];
+    cell.classList.remove("flash"); // перезапуск
+    void cell.offsetWidth;
+    cell.classList.add("flash");
+  }
+}, 320);
+
 
 setInterval(() => {
   document.querySelectorAll(".cell").forEach(c => {
