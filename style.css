@@ -25,19 +25,49 @@ body {
 }
 
 .bar {
+  position: relative;
   background: #21262d;
   height: 6px;
-  border-radius: 4px;
-  margin: 10px 0 20px;
+  border-radius: 6px;
   overflow: hidden;
 }
 
 .bar-fill {
-  background: #2ea043;
-  width: 19%;
   height: 100%;
-  transition: width 0.5s;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    #2ea043 0%,
+    #3fb950 40%,
+    #2ea043 100%
+  );
+  border-radius: 6px;
+  position: relative;
+  transition: width 0.25s ease-out;
 }
+
+/* бегущий блик */
+.bar-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.35),
+    transparent
+  );
+  animation: shine 1.2s infinite;
+}
+
+@keyframes shine {
+  0% { left: -40%; }
+  100% { left: 110%; }
+}
+
 
 .status {
   font-size: 14px;
@@ -79,8 +109,20 @@ body {
   height: 14px;
   background: #21262d;
   border-radius: 3px;
+  opacity: 0.25;
 }
 
-.cell.active {
+.cell.flash {
   background: #2ea043;
+  opacity: 1;
+  animation: cellFade 0.9s ease-out forwards;
+}
+
+@keyframes cellFade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.25;
+  }
 }
