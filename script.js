@@ -4,8 +4,16 @@ const grid = document.getElementById("grid");
 const bar = document.getElementById("bar");
 const percent = document.getElementById("percent");
 
+// создаем сетку 10x5 = 50 ячеек
+for (let i = 0; i < 50; i++) {
+  const cell = document.createElement("div");
+  cell.classList.add("cell");
+  grid.appendChild(cell);
+}
+
 const cells = document.querySelectorAll(".cell");
 
+// анимация вспышек ячеек
 setInterval(() => {
   const count = Math.floor(Math.random() * 4) + 2; // 2–5 вспышек
   for (let i = 0; i < count; i++) {
@@ -16,33 +24,14 @@ setInterval(() => {
   }
 }, 320);
 
-
+// случайное мерцание
 setInterval(() => {
-  document.querySelectorAll(".cell").forEach(c => {
+  cells.forEach(c => {
     c.classList.toggle("active", Math.random() > 0.85);
   });
 }, 500);
 
 // ===== PROGRESS =====
-let p = 0;
-let holdPhase = false;
-
-function animateProgress() {
-  let speed;
-
-  if (p < 10) {
-    speed = 0.25;              // мягкий старт
-  } else if (p < 55) {
-    speed = 0.9;               // нормальная загрузка
-  } else if (p < 80) {
-    speed = 0.18;              // 🔥 удержание
-    holdPhase = true;
-  } else if (p < 92) {
-    speed = 1.4;               // ускорение
-  } else {
-    speed = 0.35;              // финал
-  }
-
 let p = 0;
 
 function animateProgress() {
@@ -53,7 +42,7 @@ function animateProgress() {
   } else if (p < 55) {
     speed = 0.7;
   } else if (p < 80) {
-    speed = 0.18; // удержание как у них
+    speed = 0.18; // удержание
   } else if (p < 95) {
     speed = 1.3;
   } else {
@@ -80,9 +69,3 @@ function animateProgress() {
 }
 
 requestAnimationFrame(animateProgress);
-
-
-requestAnimationFrame(animateProgress);
-
-}
-
