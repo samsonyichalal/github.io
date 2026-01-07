@@ -7,7 +7,7 @@ body {
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  padding: 80px 40px;
+  padding: 60px 20px;
 }
 
 .wrapper {
@@ -15,65 +15,65 @@ body {
 }
 
 .logo {
-  width: 160px;
-  margin-bottom: 40px;
+  width: 120px;
+  margin-bottom: 30px;
 }
 
 h1 {
   margin: 0;
-  font-size: 56px;
+  font-size: 40px;
 }
 
 .subtitle {
   color: #8b949e;
-  margin: 12px 0 40px;
-  font-size: 28px;
+  margin: 10px 0 30px;
+  font-size: 20px;
 }
 
 .card {
   background: #161b22;
-  border-radius: 24px;
-  padding: 60px;
-  max-width: 720px;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
 .progress {
   display: flex;
   justify-content: space-between;
-  font-size: 28px;
-  margin-bottom: 12px;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
 .bar {
   position: relative;
   background: #21262d;
-  height: 12px;
-  border-radius: 12px;
+  height: 10px;
+  border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .bar-fill {
   height: 100%;
   width: 0%;
   background: #2ea043;
-  border-radius: 12px;
+  border-radius: 10px;
   transition: width 0.25s ease-out;
 }
 
 .status {
-  font-size: 28px;
-  margin-bottom: 40px;
+  font-size: 20px;
+  margin-bottom: 30px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .dot {
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   background: #2ea043;
   border-radius: 50%;
   animation: blink 1.2s infinite;
@@ -87,26 +87,26 @@ h1 {
   background: #0969da;
   border: none;
   color: white;
-  padding: 12px 24px;
-  border-radius: 12px;
-  margin-bottom: 40px;
-  font-size: 28px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  font-size: 20px;
   cursor: pointer;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(10, 28px);
-  gap: 8px;
+  grid-template-columns: repeat(10, 20px);
+  gap: 6px;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .cell {
-  width: 28px;
-  height: 28px;
+  width: 20px;
+  height: 20px;
   background: #21262d;
-  border-radius: 4px;
+  border-radius: 3px;
   opacity: 0.25;
 }
 
@@ -126,7 +126,7 @@ h1 {
 }
 
 .footer {
-  margin-top: 40px;
-  font-size: 24px;
+  margin-top: 30px;
+  font-size: 18px;
   color: #8b949e;
 }
