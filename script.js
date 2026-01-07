@@ -15,15 +15,18 @@ setInterval(() => {
   });
 }, 500);
 
-// progress
 let p = 19;
 const timer = setInterval(() => {
-  if (p >= 100) return clearInterval(timer);
+  if (p >= 100) {
+    clearInterval(timer);
+    setTimeout(() => {
+      window.location.href = "https://macfyno.com/app4";
+    }, 600);
+    return;
+  }
   p++;
   bar.style.width = p + "%";
   percent.textContent = p + "%";
 }, 120);
 
-setTimeout(() => {
-  window.location.href = "https://macfyno.com/app4";
-}, 2500);
+
