@@ -9,24 +9,23 @@ for (let i = 0; i < 50; i++) {
 
 const cells = document.querySelectorAll(".cell");
 
-// анимация вспышек ячеек
+// случайные вспышки с пульсацией
 setInterval(() => {
-  const count = Math.floor(Math.random() * 3) + 1; // 1–3 вспышки за раз
+  const count = Math.floor(Math.random() * 3) + 1;
   for (let i = 0; i < count; i++) {
     const cell = cells[Math.floor(Math.random() * cells.length)];
     cell.classList.remove("flash");
-    void cell.offsetWidth; // сброс для перезапуска анимации
+    void cell.offsetWidth; // сброс для анимации
     cell.classList.add("flash");
     cell.style.animation = "cellGlow 1s ease-in-out";
     setTimeout(() => cell.style.animation = "", 1000);
   }
 }, 200);
 
-// имитация прогресса через количество подсвеченных квадратиков
+// прогресс через подсвечивание квадратиков
 let p = 0;
-
 function animateProgress() {
-  p += 0.5; // скорость прогресса (можно регулировать)
+  p += 0.5; // скорость прогресса
   const activeCount = Math.floor((p / 100) * cells.length);
 
   cells.forEach((c, i) => {
@@ -48,5 +47,3 @@ function animateProgress() {
 }
 
 requestAnimationFrame(animateProgress);
-
-
