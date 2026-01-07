@@ -15,7 +15,7 @@ setInterval(() => {
   for (let i = 0; i < count; i++) {
     const cell = cells[Math.floor(Math.random() * cells.length)];
     cell.classList.remove("flash");
-    void cell.offsetWidth; // сброс для анимации
+    void cell.offsetWidth; // сброс анимации
     cell.classList.add("flash");
     cell.style.animation = "cellGlow 1s ease-in-out";
     setTimeout(() => cell.style.animation = "", 1000);
