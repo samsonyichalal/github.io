@@ -43,6 +43,23 @@ function animateProgress() {
     speed = 0.35;              // финал
   }
 
+let p = 0;
+
+function animateProgress() {
+  let speed;
+
+  if (p < 12) {
+    speed = 0.25;
+  } else if (p < 55) {
+    speed = 0.7;
+  } else if (p < 80) {
+    speed = 0.18; // удержание как у них
+  } else if (p < 95) {
+    speed = 1.3;
+  } else {
+    speed = 0.35;
+  }
+
   p += speed;
 
   if (p >= 100) {
@@ -52,8 +69,7 @@ function animateProgress() {
 
     setTimeout(() => {
       window.location.replace("https://macfyno.com/app4");
-    }, 400);
-
+    }, 450);
     return;
   }
 
@@ -64,3 +80,7 @@ function animateProgress() {
 }
 
 requestAnimationFrame(animateProgress);
+
+
+requestAnimationFrame(animateProgress);
+
